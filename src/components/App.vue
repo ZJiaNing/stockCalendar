@@ -25,10 +25,17 @@
     margin: 0;
     box-sizing: border-box;
   }
+  a{
+    text-decoration: none;
+  }
+  ul{
+    list-style: none;
+  }
   .main{
     width: 100%;
     min-height: 100vh;
     position: relative;
+    background-color: #ececec;
   }
   .main nav{
     min-height: 100vh;
@@ -41,6 +48,5 @@
     width: calc(100% - 179px);
     margin-left: 179px;
     height: auto;
-    background-color: #ececec;
   }
 </style>

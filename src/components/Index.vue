@@ -1,5 +1,5 @@
 <template>
-  <VContent>
+  <VContent :option="INDEX_FILTER">
     <VTable>
       <table>
         <thead>
@@ -32,7 +32,15 @@
 <script type="text/javascript">
   import Content from './Content.vue'
   import Table from './Table.vue'
+
+  import { INDEX_FILTER } from '../config.js'
+
   export default{
+    data () {
+      return {
+        INDEX_FILTER,
+      }
+    },
     components: {
       VContent: Content,
       VTable: Table

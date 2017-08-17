@@ -1,6 +1,6 @@
 <template>
   <div class="content-box">
-    <VFilter />
+    <VFilter :option="option" />
     <div class="content">
       <!-- 其余table内容的替换  -->
       <slot></slot>
@@ -15,6 +15,9 @@
   import Filter from './Filter.vue'
 
   export default {
+    props: {
+      option: Object
+    },
     components: {
       VNoInfo: NoInfo,
       VFilter: Filter
@@ -22,6 +25,8 @@
   }
 </script>
 
-<style media="screen">
-
+<style media="screen" scoped>
+  .content{
+    margin-top: 22px;
+  }
 </style>
