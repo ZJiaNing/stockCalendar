@@ -1,5 +1,5 @@
 <template>
-  <VContent :option="ANNOUNCEMENT_FILTER">
+  <VContent :option="ANNOUNCEMENT_FILTER" :isNoInfo="data && data.length > 0">
     <VTable>
       <table>
         <thead>
@@ -8,20 +8,10 @@
           <th>债券简称</th>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>S1132072.IB</td>
-            <td>17浦信1A1</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>S1132073.IB</td>
-            <td>17浦信1A2</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>S1132074.IB</td>
-            <td>17浦信1A3</td>
+          <tr v-for="item in data">
+            <td>{{item.id}}</td>
+            <td>{{item.thscode}}</td>
+            <td>{{item.zqjc}}</td>
           </tr>
         </tbody>
       </table>
@@ -34,17 +24,38 @@
   import Table from './Table.vue'
 
   import { ANNOUNCEMENT_FILTER } from '../config.js'
+  import { fetchAnnouncementData } from '../utils.js'
 
   export default{
     data() {
       return {
-        msg: 'This is Announcement page.',
+        data: {},
+        type: '',
         ANNOUNCEMENT_FILTER
       }
+    },
+    created() {
+      this.fetchData();
     },
     components: {
       VContent: Content,
       VTable: Table
+    },
+    methods: {
+      fetchData: function (){
+        let params = {
+          type: this.type
+        }
+
+        fetchAnnouncementData(params)
+          .then(res => {
+              this.data = res.data;
+              console.log('the announcement result is: ' + (res.data && res.data.length));
+          })
+          .catch(error => {
+              console.log(error)
+          });
+      }
     }
   }
 </script>

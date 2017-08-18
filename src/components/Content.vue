@@ -3,9 +3,9 @@
     <VFilter :option="option" />
     <div class="content">
       <!-- 其余table内容的替换  -->
-      <slot></slot>
+      <slot v-if="isNoInfo"></slot>
       <!-- 而这边需要控制“暂无数据”的显示和隐藏 -->
-      <VNoInfo />
+      <VNoInfo v-if="!isNoInfo" />
     </div>
   </div>
 </template>
@@ -16,7 +16,11 @@
 
   export default {
     props: {
-      option: Object
+      option: Object,
+      isNoInfo: {
+        type: Boolean,
+        default: false
+      }
     },
     components: {
       VNoInfo: NoInfo,

@@ -7,6 +7,14 @@
 
 <script type="text/javascript">
   export default{
+    data() {
+      return {
+        msg: 'This is Table Component.'
+      }
+    },
+    methods: {
+
+    }
   }
 </script>
 
