@@ -19,11 +19,30 @@
         </el-date-picker>
       </div>
       <!-- 日期选择控件 ends -->
+      <!-- 文本输入框 starts -->
+      <div class="filter-input" v-if="option.searchinput">
+        <!-- <input type="text" name="" v-model="fake" value="" v-on:input="handleInput" /> -->
+        <el-input
+          size="small"
+          placeholder="请输入查询条件"
+          icon="search"
+          v-model="word"
+          v-on:input="handleInput"
+          :on-icon-click="handleIconClick">
+        </el-input>
+      </div>
+      <!-- 文本输入框 ends -->
+      <div class="">
+        <button type="button" name="button" v-on:click="subClick">Click me</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/javascript">
+  // 使用了一下lodash的延时函数 ，主要想用于自动补全功能的
+  import debounce from 'lodash/debounce.js'
+
   export default{
     props: {
       option: Object
@@ -31,8 +50,24 @@
     data() {
       return {
         date: '2017-08-17',
-        type: '0'
+        type: '0',
+        word: ''
       }
+    },
+    methods: {
+      subClick() {
+        console.log('you click sub');
+        this.$emit('funfun');
+      },
+      handleIconClick(ev) {
+        console.log(ev);
+      },
+      handleInput: debounce(function (ev){
+        // 这边可以做个AutoComplete的组件——have a try
+        // QQ：为什么这个ev的值，是当前输入的值呢？？ 这个ev不应该是event吗？？
+        // AA：因为element-ui对这个input做了处理，使得这个ev变成了用户输入的文本内容，如果你自己写input的话，那么这个ev就还是event的表示
+        console.log(ev);
+      }, 1000)
     },
     watch: {
       date: function (val, oldValue){

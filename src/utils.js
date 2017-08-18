@@ -43,7 +43,7 @@ export const fetch = (url, params) => {
 
 // Mock模拟是数据
 Mock.mock('http://g.cn', {
-  'data|0-1': [{
+  'data|0-10': [{
     'id|+1': 1,
     'thscode': Mock.mock('@id'),
     'zqjc': Mock.Random.csentence(5)

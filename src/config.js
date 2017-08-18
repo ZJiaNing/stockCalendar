@@ -2,6 +2,7 @@
 
 export const INDEX_FILTER = {
   datepicker: true,
+  searchinput: false,
   stocktype: [{
     name: '自选股',
     type: '0'
@@ -23,6 +24,7 @@ export const INDEX_FILTER = {
 export const ANNOUNCEMENT_FILTER = {
   // colsetting: 2,
   datepicker: false,
+  searchinput: true,
   stocktype: [{
     name: '自选股',
     type: '0'

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import routes from './router/routes.js'
 import App from './components/App.vue';
 
+// 这边之后不可以这么把整个都打包进去，这样无疑会导致速度的下降的！！！
 import ElementUI from 'element-ui'
 
 // 注册插件，注册完之后才可以使用的
@@ -13,6 +14,7 @@ Vue.use(ElementUI);
 const router = new VueRouter({
   routes
 });
+
 
 new Vue({
   router,

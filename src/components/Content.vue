@@ -1,6 +1,6 @@
 <template>
   <div class="content-box">
-    <VFilter :option="option" />
+    <VFilter :option="option" v-on:funfun="parantClick" />
     <div class="content">
       <!-- 其余table内容的替换  -->
       <slot v-if="isNoInfo"></slot>
@@ -25,6 +25,11 @@
     components: {
       VNoInfo: NoInfo,
       VFilter: Filter
+    },
+    methods: {
+      parantClick() {
+        console.log('parent ouput!!!');
+      }
     }
   }
 </script>
