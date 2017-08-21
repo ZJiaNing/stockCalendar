@@ -40,6 +40,9 @@
   .table table tbody tr:hover{
     background-color: lightyellow;
   }
+  .table table tbody td a{
+    color: #4288fa;
+  }
   .table .table-title{
     background-color: #f5f5f5;
     height: 64px;

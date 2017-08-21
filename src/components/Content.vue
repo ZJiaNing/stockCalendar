@@ -1,6 +1,6 @@
 <template>
   <div class="content-box">
-    <VFilter :option="option" v-on:funfun="parantClick" />
+    <VFilter :option="option" v-on:funfun="parantClick" :fetchData="fetchData" />
     <div class="content">
       <!-- 其余table内容的替换  -->
       <slot v-if="isNoInfo"></slot>
@@ -16,6 +16,7 @@
 
   export default {
     props: {
+      fetchData: Function,
       option: Object,
       isNoInfo: {
         type: Boolean,

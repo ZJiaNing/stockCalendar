@@ -1,5 +1,5 @@
 <template>
-  <VContent :option="ANNOUNCEMENT_FILTER" :isNoInfo="data && data.length > 0">
+  <VContent :option="ANNOUNCEMENT_FILTER" :isNoInfo="data && data.length > 0" :fetchData="fetchData">
     <VTable>
       <table>
         <thead>
@@ -31,23 +31,28 @@
       return {
         data: {},
         type: '',
+        word: '',
         ANNOUNCEMENT_FILTER
       }
     },
     created() {
-      this.fetchData();
+      this.fetchData('', '');
     },
     components: {
       VContent: Content,
       VTable: Table
     },
     methods: {
-      fetchData: function (){
-        let params = {
-          type: this.type
+      fetchData: function (params){
+        this.type = params.type;
+        this.word = params.word;
+
+        let param = {
+          type: this.type,
+          word: this.word
         }
 
-        fetchAnnouncementData(params)
+        fetchAnnouncementData(param)
           .then(res => {
               this.data = res.data;
               console.log('the announcement result is: ' + (res.data && res.data.length));

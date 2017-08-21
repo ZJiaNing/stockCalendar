@@ -45,7 +45,7 @@ export const fetch = (url, params) => {
 Mock.mock('http://g.cn', {
   'data|0-10': [{
     'id|+1': 1,
-    'thscode': Mock.mock('@id'),
+    'thscode|1-100.2': 1,
     'zqjc': Mock.Random.csentence(5)
   }]
 });
@@ -55,6 +55,7 @@ Mock.mock('http://g.cn', {
 */
 export const fetchIndexData = (params) => {
   // console.log("fetch the index page data: " + JSON.stringify(params));
+  console.log(params);
   return fetch('http://g.cn', params);
 }
 
@@ -63,5 +64,6 @@ export const fetchIndexData = (params) => {
 */
 export const fetchAnnouncementData = (params) => {
   // console.log('fetch announcement page data: ' + JSON.stringify(params));
+  console.log(params);
   return fetch('http://g.cn', params);
 }

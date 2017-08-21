@@ -21,40 +21,61 @@
       <!-- 日期选择控件 ends -->
       <!-- 文本输入框 starts -->
       <div class="filter-input" v-if="option.searchinput">
-        <!-- <input type="text" name="" v-model="fake" value="" v-on:input="handleInput" /> -->
+        <!-- 奇怪，为什么这边不能这么写呀？ v-model里面的change -->
+        <!-- <input type="text" name="" v-model="fake | change" value="" v-on:keyup.13="handleSearch" v-on:input="handleInput" /> -->
+        <!-- element-ui里面的inpu的enter事件需要向下面这么写的 -->
         <el-input
           size="small"
           placeholder="请输入查询条件"
           icon="search"
-          v-model="word"
+          v-model="wordItc"
+          @keyup.enter.native="handleSearch"
           v-on:input="handleInput"
           :on-icon-click="handleIconClick">
         </el-input>
       </div>
       <!-- 文本输入框 ends -->
-      <div class="">
+      <!-- 下面是测试父子组件通信的，，并没有参数传递 -->
+      <!-- <div class="">
         <button type="button" name="button" v-on:click="subClick">Click me</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script type="text/javascript">
-  // 使用了一下lodash的延时函数 ，主要想用于自动补全功能的
+  // 使用了一下lodash的延时函数 ，主要想尝试下自动补全功能的
   import debounce from 'lodash/debounce.js'
 
   export default{
     props: {
-      option: Object
+      option: Object,
+      fetchData: Function
     },
     data() {
       return {
         date: '2017-08-17',
         type: '0',
-        word: ''
+        fake: '',
+        word: '',
+        wordItc: ''
       }
     },
     methods: {
+      getParams() {
+        // 获取当前参数的
+        var params = {
+          type: this.type,
+          date: this.date,
+          word: this.word
+        }
+
+        return params;
+      },
+      handleSearch(ev) {
+        console.log(ev);
+        // this.word = ev.value;
+      },
       subClick() {
         console.log('you click sub');
         this.$emit('funfun');
@@ -66,15 +87,23 @@
         // 这边可以做个AutoComplete的组件——have a try
         // QQ：为什么这个ev的值，是当前输入的值呢？？ 这个ev不应该是event吗？？
         // AA：因为element-ui对这个input做了处理，使得这个ev变成了用户输入的文本内容，如果你自己写input的话，那么这个ev就还是event的表示
-        console.log(ev);
+        // console.log(ev);
+        this.word = this.wordItc;
       }, 1000)
     },
     watch: {
+      word: function (val, oldValue){
+        this.fetchData(this.getParams());
+      },
       date: function (val, oldValue){
         console.log('you have changed the date into ' + val);
+        this.fetchData(this.getParams());
       },
       type: function (val, oldValue){
+        // 这边实现监听，然后告诉父类，发生了这件事情
+        this.fetchData(this.getParams());
         console.log('you have changed the type into: ' + val);
+        this.$emit('funfun');
       }
     }
   }
