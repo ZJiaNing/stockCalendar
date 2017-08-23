@@ -1,7 +1,12 @@
 // 工具函数存放一些公共函数
+import Vue from 'vue'
 import axios from 'axios'
 import Mock from 'mockjs'
 import { Loading } from 'element-ui'
+
+// 非父子组件的通信
+// 可以使用一个空的vue实例来作为中央事件总线（event bus）
+export let bus  = new Vue();
 
 // 处理GET请求——通用的方法来处理"ajax"请求
 // 这边使用axios进行处理——除了这个呢？？？ 是不是也可以同样使用request也处理呢？

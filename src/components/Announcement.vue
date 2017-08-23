@@ -1,5 +1,6 @@
 <template>
   <VContent :option="ANNOUNCEMENT_FILTER" :isNoInfo="data && data.length > 0" :fetchData="fetchData">
+    <h1>{{msg}}</h1>
     <VTable>
       <table>
         <thead>
@@ -24,7 +25,7 @@
   import Table from './Table.vue'
 
   import { ANNOUNCEMENT_FILTER } from '../config.js'
-  import { fetchAnnouncementData } from '../utils.js'
+  import { fetchAnnouncementData, bus } from '../utils.js'
 
   export default{
     data() {
@@ -32,11 +33,19 @@
         data: {},
         type: '',
         word: '',
+        msg: '',
         ANNOUNCEMENT_FILTER
       }
     },
     created() {
       this.fetchData('', '');
+
+      bus.$on('busbus', function (msg) {
+        // ...
+        this.msg = msg;
+        console.log(msg);
+        console.log('the announcement has recieved the message');
+      })
     },
     components: {
       VContent: Content,

@@ -28,7 +28,9 @@
       VFilter: Filter
     },
     methods: {
-      parantClick() {
+      parantClick(type) {
+        // @type: 是从子组件传递过来的
+        console.log('the type you got is: ' + type);
         console.log('parent ouput!!!');
       }
     }

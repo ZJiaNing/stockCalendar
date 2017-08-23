@@ -4,6 +4,8 @@
       <!--下面的是简单的测试了一下computed方法的  -->
       <!-- <h1>{{reverseMs}}</h1>
       <button type="button" name="button" v-on:click="changeMsg">button</button> -->
+      <!-- 下面的代码测试一下事件总线bus -->
+      <button type="button" name="button" v-on:click="sendBus">start bus</button>
       <table>
         <thead>
           <th>序号</th>
@@ -28,7 +30,7 @@
   import Table from './Table.vue'
 
   import { INDEX_FILTER } from '../config.js'
-  import { fetchIndexData } from '../utils.js'
+  import { fetchIndexData, bus } from '../utils.js'
 
   export default{
     data () {
@@ -41,6 +43,7 @@
       }
     },
     computed:{
+      // 如下的这个属性，具备了getter和setter方法
       reverseMs: {
         get() {
           // getter
@@ -52,7 +55,11 @@
       }
     },
     created() {
+      console.log('this is created');
       this.fetchData('', '');
+    },
+    mouted() {
+        console.log('this is mouted');
     },
     components: {
       VContent: Content,
@@ -82,6 +89,10 @@
       },
       changeMsg() {
         this.msg = "SEA, NICE";
+      },
+      sendBus() {
+        console.log('youa sended a message to ANNOUNCEMENT');
+        bus.$emit('busbus', this.msg);
       },
       jumpToBasic(param) {
         console.log(param);

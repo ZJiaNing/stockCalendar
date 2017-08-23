@@ -78,7 +78,8 @@
       },
       subClick() {
         console.log('you click sub');
-        this.$emit('funfun');
+        // 向父组件传递参数，可以直接在后面添加即可
+        this.$emit('funfun', this.type);
       },
       handleIconClick(ev) {
         console.log(ev);
@@ -103,7 +104,6 @@
         // 这边实现监听，然后告诉父类，发生了这件事情
         this.fetchData(this.getParams());
         console.log('you have changed the type into: ' + val);
-        this.$emit('funfun');
       }
     }
   }
