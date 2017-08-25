@@ -1,11 +1,15 @@
 var path = require('path')
 var webpack = require('webpack')
+// 这个插件是用来将js、css抽离出来的
+// var ExtractTextPlugin = require("extract-text-webpack-plugin");
+// 这个插件是生成独立的html的——不要和上面的那个记混了
+// 当使用这个插件的是需要，需要将publicPath指向“/”！！！
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+console.log(__dirname);
 
 module.exports = {
-  entry: './src/main.js',
+  entry: path.resolve(__dirname, './main.js'),
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
     filename: 'build.js'
   },
   module: {
@@ -35,10 +39,19 @@ module.exports = {
     ]
   },
   resolve: {
+    extensions: [' ', 'css', '.js', '.vue'],    // 第一个单引号里面有一个空格的
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue'
     }
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'stock calendar',
+      filename: 'src/index.html',
+      template: path.resolve(__dirname, '../src/index.html'),
+      inject: true
+    })
+  ],
   devServer: {
     historyApiFallback: true,
     noInfo: true
@@ -47,25 +60,4 @@ module.exports = {
     hints: false
   },
   devtool: '#eval-source-map'
-}
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
-  ])
 }

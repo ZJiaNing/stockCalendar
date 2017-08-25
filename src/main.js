@@ -16,11 +16,6 @@ const router = new VueRouter({
 });
 
 
-// Vue.config.keyCodes = {
-//   enter: 13
-// }
-
-
 new Vue({
   router,
   // ES6新语法，箭头函数

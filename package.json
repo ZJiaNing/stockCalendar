@@ -5,12 +5,12 @@
   "author": "Ada",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "dev": "webpack --display-modules --display-chunks --config src/webpack.config.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
     "element-ui": "^1.4.2",
+    "html-webpack-plugin": "^2.30.1",
     "lodash": "^4.17.4",
     "mockjs": "^1.0.1-beta3",
     "vue": "^2.4.2"
