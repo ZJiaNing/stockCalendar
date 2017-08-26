@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>债券速览改版</title>
+    <style media="screen">
+      *{
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      table{
+        border-collapse: collapse;
+      }
+      .container{
+        margin: 0 10px;
+      }
+      .div-con{
+        margin: 15px 0;
+      }
+      .div-con .title{
+        padding: 4px 5px;
+        font-size: 12px;
+        background-color: #e5f0fe;
+      }
+      .div-con .title>b{
+        color: #2c69ba;
+      }
+      .div-con .show-lengend{
+        float: right;
+        font-weight: normal;
+      }
+      .div-con .show-lengend>i {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+        background-image: url('chart.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      .div-con table{
+        width: 100%;
+        font-size: 12px;
+        text-align: left;
+      }
+      .div-con table th, .div-con table td{
+        padding-left: 5px;
+        border: 1px solid #bdd1ea;
+        line-height: 18px;
+      }
+      .div-con table th{
+        font-weight: normal;
+        background-color: #f6f8fd;
+      }
+      .div-con table th>span{
+        color: darkblue;
+      }
+      .div-con table.two-column-tb td:nth-child(odd){
+        width: 18%;
+        background-color: #f6f8fd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 债券估值 starts -->
+      <div class="div-con">
+        <h1 class="title"><b>中债估值</b></h1>
+        <table>
+          <thead>
+            <th>估价日期</th>
+            <th>估价全价（元）</th>
+            <th>估价净价（元）</th>
+            <th>应计利息</th>
+            <th>到期收益率（%）</th>
+            <th>久期</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2018-01-01</td>
+              <td>锁</td>
+              <td>锁</td>
+              <td>3.234</td>
+              <td>锁</td>
+              <td>锁</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 债券估值 ends -->
+      <!-- 基本信息 starts -->
+      <div class="div-con">
+        <h1 class="title"><b>基本信息</b></h1>
+        <table class="two-column-tb">
+          <tbody>
+            <tr>
+              <td>债券代码</td>
+              <td>122000.SH</td>
+              <td>到期日期</td>
+              <td>2017-09-24</td>
+            </tr>
+            <tr>
+              <td>债券简称</td>
+              <td>afa</td>
+              <td>质押债券代码(沪市)</td>
+              <td>104000</td>
+            </tr>
+            <tr>
+              <td>债券全称</td>
+              <td>afa</td>
+              <td>质押债券简称(沪市)</td>
+              <td>104000</td>
+            </tr>
+            <tr>
+              <td>交易市场</td>
+              <td>afa</td>
+              <td>标准券折算率</td>
+              <td>104000</td>
+            </tr>
+            <tr>
+              <td>上市日期</td>
+              <td>afa</td>
+              <td>是否城投债</td>
+              <td>104000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 基本信息 ends -->
+      <!-- 重要指标 starts -->
+      <div class="div-con">
+        <h1 class="title">
+          <b>重要指标</b>
+          <span class="show-lengend"><i></i>显示图例</span>
+        </h1>
+        <table>
+          <thead>
+            <th><span class="">发行总额(亿元)</span></th>
+            <th><span>债券余额(亿元)</span></th>
+            <th><span>发行期限(年)</span></th>
+            <th><span>剩余期限(年)</span></th>
+            <th>付息频率(月/次)</th>
+            <th>距下一付息日</th>
+            <th><span>发行利率(%)</span></th>
+            <th><span>当期利率(%)</span></th>
+            <th><span>最新债项评级</span></th>
+            <th><span>中债隐含评级</span></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>56</td>
+              <td>7</td>
+              <td>453</td>
+              <td>756</td>
+              <td>345</td>
+              <td>36</td>
+              <td>363</td>
+              <td>363</td>
+              <td>哈佛考试</td>
+              <td>按时对话框</td>
+            </tr>
+            <tr>
+              <td>56</td>
+              <td>7</td>
+              <td>453</td>
+              <td>756</td>
+              <td>345</td>
+              <td>36</td>
+              <td>363</td>
+              <td>363</td>
+              <td>哈佛考试</td>
+              <td>按时对话框</td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="chart" class="chart-detail">
+
+        </div>
+      </div>
+      <!-- 重要指标 ends -->
+      <!-- 参与机构 starts -->
+      <div class="div-con">
+        <h1 class="title">参与机构</h1>
+        <table class="two-column-tb">
+          <tbody>
+            <tr>
+              <td>发行人</td>
+              <td>中国长江股份有限公司</td>
+              <td>担保方式</td>
+              <td>不可撤销连带责任担保</td>
+            </tr>
+            <tr>
+              <td>发行人行业分类(GICS一级/二级/三级/四级)</td>
+              <td>公用事业</td>
+              <td>评级机构</td>
+              <td>中诚信证券评估有限公司</td>
+            </tr>
+            <tr>
+              <td>担保人</td>
+              <td>中国建设银行股份有限公司</td>
+              <td>增信情况</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 参与机构 ends -->
+    </div>
+
+  <script src="echarts.simple.min.js"></script>
+  <script type="text/javascript">
+    var chartObj = document.getElementById('chart');
+    console.log(chartObj);
+  </script>
+  </body>
+</html>
