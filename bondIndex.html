@@ -58,13 +58,14 @@
       }
       .div-con table th>span{
         color: darkblue;
+        cursor: pointer;
       }
       .div-con table.two-column-tb td:nth-child(odd){
         width: 18%;
         background-color: #f6f8fd;
       }
       .chart-wrap{
-        display: block;
+        display: none;
         position: absolute;
         width: 406px;
         height: 270px;
@@ -73,10 +74,18 @@
       }
       .chart-detail{
         width: 400px;
-        height: 250px;
+        height: 237px;
       }
       .chart-wrap>span{
+        padding-left: 10px;
         font-size: 12px;
+      }
+      .chart-wrap>span>i{
+        display: inline-block;
+        margin: 0 5px;
+        width: 12px;
+        height: 12px;
+        background-color: lightblue;
       }
     </style>
   </head>
@@ -200,7 +209,7 @@
       <!-- 重要指标 ends -->
       <!-- 参与机构 starts -->
       <div class="div-con">
-        <h1 class="title">参与机构</h1>
+        <h1 class="title"><b>参与机构</b></h1>
         <table class="two-column-tb">
           <tbody>
             <tr>
@@ -235,9 +244,13 @@
     var config = {
       "fxze": {
         "title": "发行总额(亿元)",
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
       },
       "zqye": {
-        "title": "债券余额(亿元)"
+        "title": "债券余额(亿元)",
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+        "xAxisData": ['zqye月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
       },
       "fxqx": {
         "title": "发行期限(年)"
@@ -284,20 +297,18 @@
             show : false,
         },
         calculable : false,
-        xAxis : [
-            {
-                type : 'category',
-                data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-                axisLine: {
-                  lineStyle: {
-                    color: '#c8c8c8'
-                  }
-                },
-                axisLabel: {
-                  color: '#999'
-                }
+        xAxis : {
+            type : 'category',
+            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+            axisLine: {
+              lineStyle: {
+                color: '#c8c8c8'
+              }
+            },
+            axisLabel: {
+              color: '#999'
             }
-        ],
+        },
         yAxis : [
             {
                 name: '数量',
@@ -382,7 +393,14 @@
     // 更新图中的数据
     function updateChart (cate){
       var title = config[cate]['title'];
+      var seriesData = config[cate]['seriesData'];
+      var xAxisData = config[cate]['xAxisData'];
       option.title.text = title;
+
+      if (seriesData){
+        option.series.data = seriesData;
+        option.xAxis.data = xAxisData;
+      }
 
       chart.setOption(option);
     }
