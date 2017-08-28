@@ -15,6 +15,9 @@
       .container{
         margin: 0 10px;
       }
+      .div-relative{
+        position: relative;
+      }
       .div-con{
         margin: 15px 0;
       }
@@ -59,6 +62,21 @@
       .div-con table.two-column-tb td:nth-child(odd){
         width: 18%;
         background-color: #f6f8fd;
+      }
+      .chart-wrap{
+        display: block;
+        position: absolute;
+        width: 406px;
+        height: 270px;
+        border: 1px solid #ccc;
+        background: rgb(255, 255, 255);
+      }
+      .chart-detail{
+        width: 400px;
+        height: 250px;
+      }
+      .chart-wrap>span{
+        font-size: 12px;
       }
     </style>
   </head>
@@ -129,23 +147,23 @@
       </div>
       <!-- 基本信息 ends -->
       <!-- 重要指标 starts -->
-      <div class="div-con">
+      <div class="div-con div-relative">
         <h1 class="title">
           <b>重要指标</b>
           <span class="show-lengend"><i></i>显示图例</span>
         </h1>
         <table>
           <thead>
-            <th><span class="">发行总额(亿元)</span></th>
-            <th><span>债券余额(亿元)</span></th>
-            <th><span>发行期限(年)</span></th>
-            <th><span>剩余期限(年)</span></th>
+            <th><span class="show-chart" data-cate="fxze">发行总额(亿元)</span></th>
+            <th><span class="show-chart" data-cate="zqye">债券余额(亿元)</span></th>
+            <th><span class="show-chart" data-cate="fxqx">发行期限(年)</span></th>
+            <th><span class="show-chart" data-cate="synx">剩余期限(年)</span></th>
             <th>付息频率(月/次)</th>
             <th>距下一付息日</th>
-            <th><span>发行利率(%)</span></th>
-            <th><span>当期利率(%)</span></th>
-            <th><span>最新债项评级</span></th>
-            <th><span>中债隐含评级</span></th>
+            <th><span class="show-chart" data-cate="fxll">发行利率(%)</span></th>
+            <th><span class="show-chart" data-cate="dqll">当期利率(%)</span></th>
+            <th><span class="show-chart" data-cate="zxzxpj">最新债项评级</span></th>
+            <th><span class="show-chart" data-cate="zzyhpj">中债隐含评级</span></th>
           </thead>
           <tbody>
             <tr>
@@ -174,8 +192,9 @@
             </tr>
           </tbody>
         </table>
-        <div id="chart" class="chart-detail">
-
+        <div id="chartWrap" class="chart-wrap">
+          <div id="chart" class="chart-detail"></div>
+          <span>注：<i class="tip"></i>为当前债券所在市场位置</span>
         </div>
       </div>
       <!-- 重要指标 ends -->
@@ -208,10 +227,169 @@
       <!-- 参与机构 ends -->
     </div>
 
-  <script src="echarts.simple.min.js"></script>
+  <script src="echarts.common.min.js"></script>
   <script type="text/javascript">
+    // 以及这边要做的的是，如果数据请求下来了，则不再进行请求，即保存下来——这个具体看php那边怎么处理吧
+
+    // 图的配置项
+    var config = {
+      "fxze": {
+        "title": "发行总额(亿元)",
+      },
+      "zqye": {
+        "title": "债券余额(亿元)"
+      },
+      "fxqx": {
+        "title": "发行期限(年)"
+      },
+      "synx": {
+        "title": "剩余期限(年)"
+      },
+      "fxll": {
+        "title": "发行利率(%)"
+      },
+      "dqll": {
+        "title": "当期利率(%)"
+      },
+      "zxzxpj": {
+        "title": "最新债项评级"
+      },
+      "zzyhpj": {
+        "title": "中债隐含评级"
+      }
+    }
+
+    // echarts配置项
+    var option = {
+        color: ['#999'],
+        title: {
+            text: '发行总额(亿元)-市场数据',
+            textStyle: {
+              color: '#000',
+              fontSize: '14'
+            }
+        },
+        grid: {
+          top: 70
+        },
+        backgroundColor: '#ffffff',
+        tooltip : {
+            show: 'true',
+            trigger: 'axis'
+        },
+        legend: {
+            show: false
+        },
+        toolbox: {
+            show : false,
+        },
+        calculable : false,
+        xAxis : [
+            {
+                type : 'category',
+                data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+                axisLine: {
+                  lineStyle: {
+                    color: '#c8c8c8'
+                  }
+                },
+                axisLabel: {
+                  color: '#999'
+                }
+            }
+        ],
+        yAxis : [
+            {
+                name: '数量',
+                type : 'value',
+                nameTextStyle: {
+                  color: '#000'
+                },
+                axisLine: {
+                  show: false
+                },
+                axisTick: {
+                  show: false
+                }
+            }
+        ],
+        series : {
+            name:'蒸发量',
+            type:'bar',
+            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top'
+                }
+            }
+        }
+    }
+
+    // 麻烦用原生js写，不会的你慢慢尝试，尝试了就会了，，你当然可以的
+    var chart = null;
     var chartObj = document.getElementById('chart');
-    console.log(chartObj);
+    var chartWrapObj = document.getElementById('chartWrap');
+    // 隐藏的元素时没有长宽的，所以这边先默认吧
+    var chartWidth = 406;
+    var chartHeight = 270;  // 实为chart-wrap的高度
+
+    // 事件监听
+    var showChartIcon = document.querySelectorAll('.show-chart');
+
+    // 然后就需要编写具体的执行代码了
+    // enter 的时候需要展示chart，leave的时候需要隐藏chart
+    for (var i=0;i<showChartIcon.length;i++){
+      // 监听鼠标移入
+      showChartIcon[i].addEventListener('mouseenter', function (e) {
+        // console.log('mouse enter');
+        var curObj = e.target;
+        var cate = curObj.getAttribute('data-cate');
+        // console.log(cate);
+        var curObjWidth = curObj.offsetWidth;
+        var location = curObj.getBoundingClientRect();
+        // console.log(location.left + '  ' + location.top);
+        var left = location.left + curObjWidth;
+        var top = location.top - 250 + 30;
+
+        var winW = window.innerWidth;
+        // var winH = window.innerHeight;
+        if (left + chartWidth > winW){
+          left = location.left - chartWidth - curObjWidth/4;
+        }
+
+        // 这边还需另一套计算规则来确定边界
+        chartWrapObj.style.left = left + 'px';
+        chartWrapObj.style.top = top + 'px';
+
+        // 先更新数据再显示出来
+        updateChart(cate);
+        chartWrapObj.style.display = "block";
+      });
+
+      // 监听鼠标移出
+      showChartIcon[i].addEventListener('mouseleave', function (e) {
+        chartWrapObj.style.display = "none";
+      });
+    }
+
+    // 最新债项评级  && 中债隐含评级 为饼图，其余为柱状图
+    function initChart (){
+      chart = echarts.init(chartObj);
+      chart.setOption(option);
+    }
+
+    // 更新图中的数据
+    function updateChart (cate){
+      var title = config[cate]['title'];
+      option.title.text = title;
+
+      chart.setOption(option);
+    }
+
+    // 先调用一次， 用fakeData，然后mouseleave和mouseenter事件中使用函数更新
+    initChart();
+
   </script>
   </body>
 </html>
