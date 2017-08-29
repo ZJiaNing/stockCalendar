@@ -13,7 +13,12 @@
         border-collapse: collapse;
       }
       .container{
+        position: relative;
         margin: 0 10px;
+      }
+      .div-flex{
+        display: flex;
+        margin-bottom: 10px;
       }
       .div-relative{
         position: relative;
@@ -29,15 +34,18 @@
       .div-con .title>b{
         color: #2c69ba;
       }
-      .div-con .show-lengend{
+      .div-con .show-legend{
         float: right;
         font-weight: normal;
+        cursor: pointer;
       }
-      .div-con .show-lengend>i {
+      .div-con .show-legend::before {
+        content: '';
         display: inline-block;
         width: 16px;
         height: 16px;
         margin-right: 5px;
+        vertical-align: middle;
         background-image: url('chart.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -56,7 +64,7 @@
         font-weight: normal;
         background-color: #f6f8fd;
       }
-      .div-con table th>span{
+      .div-con table th.show-chart{
         color: darkblue;
         cursor: pointer;
       }
@@ -71,6 +79,7 @@
         height: 270px;
         border: 1px solid #ccc;
         background: rgb(255, 255, 255);
+        z-index: 11;
       }
       .chart-detail{
         width: 400px;
@@ -80,12 +89,32 @@
         padding-left: 10px;
         font-size: 12px;
       }
-      .chart-wrap>span>i{
+      .chart-wrap>span>i, .chart-tip>i{
         display: inline-block;
         margin: 0 5px;
         width: 12px;
         height: 12px;
-        background-color: lightblue;
+        vertical-align: middle;
+        background-color: #3494d0;
+      }
+      .con-left, .con-right{
+        height: 300px;
+        box-shadow: 0 0 2px black;
+      }
+      .con-left{
+        margin-right: 10px;
+      }
+      /* 需要一个特定的宽度才行 */
+      .chart-m{
+        width: 100%;
+        height: 270px;
+        background-color: #ffffff;
+      }
+      .chart-tip {
+        display: inline-block;
+        margin-top: 9px;
+        margin-left: 8px;
+        font-size: 12px;
       }
     </style>
   </head>
@@ -159,20 +188,20 @@
       <div class="div-con div-relative">
         <h1 class="title">
           <b>重要指标</b>
-          <span class="show-lengend"><i></i>显示图例</span>
+          <span id="showLegend" class="show-legend">显示图例</span>
         </h1>
         <table>
           <thead>
-            <th><span class="show-chart" data-cate="fxze">发行总额(亿元)</span></th>
-            <th><span class="show-chart" data-cate="zqye">债券余额(亿元)</span></th>
-            <th><span class="show-chart" data-cate="fxqx">发行期限(年)</span></th>
-            <th><span class="show-chart" data-cate="synx">剩余期限(年)</span></th>
+            <th class="show-chart" data-cate="fxze">发行总额(亿元)</th>
+            <th class="show-chart" data-cate="zqye">债券余额(亿元)</th>
+            <th class="show-chart" data-cate="fxqx">发行期限(年)</th>
+            <th class="show-chart" data-cate="synx">剩余期限(年)</th>
             <th>付息频率(月/次)</th>
             <th>距下一付息日</th>
-            <th><span class="show-chart" data-cate="fxll">发行利率(%)</span></th>
-            <th><span class="show-chart" data-cate="dqll">当期利率(%)</span></th>
-            <th><span class="show-chart" data-cate="zxzxpj">最新债项评级</span></th>
-            <th><span class="show-chart" data-cate="zzyhpj">中债隐含评级</span></th>
+            <th class="show-chart" data-cate="fxll">发行利率(%)</th>
+            <th class="show-chart" data-cate="dqll">当期利率(%)</th>
+            <th class="show-chart" data-cate="zxzxpj">最新债项评级</th>
+            <th class="show-chart" data-cate="zzyhpj">中债隐含评级</th>
           </thead>
           <tbody>
             <tr>
@@ -203,10 +232,62 @@
         </table>
         <div id="chartWrap" class="chart-wrap">
           <div id="chart" class="chart-detail"></div>
-          <span>注：<i class="tip"></i>为当前债券所在市场位置</span>
+          <span>注：<i></i>为当前债券所在市场位置</span>
         </div>
       </div>
       <!-- 重要指标 ends -->
+      <!-- echarts渲染区域 starts -->
+      <div id="chartsDetail" class="div-con" style="display: none;">
+        <!-- first group starts -->
+        <div class="div-flex">
+          <div class="con-left">
+            <div id="fxze" class="chart-m"></div>
+            <span class="chart-tip">注：<i></i>为当前债券所在市场位置</span>
+          </div>
+          <div class="con-right">
+            <div id="zqye" class="chart-m"></div>
+            <span class="chart-tip">注：<i></i>为当前债券所在市场位置</span>
+          </div>
+        </div>
+        <!-- first group ends -->
+        <!-- second group starts -->
+        <div class="div-flex">
+          <div class="con-left">
+            <div id="fxqx" class="chart-m"></div>
+            <span class="chart-tip">注：<i></i>为当前债券所在市场位置</span>
+          </div>
+          <div class="con-right">
+            <div id="synx" class="chart-m"></div>
+            <span class="chart-tip">注：<i></i>为当前债券所在市场位置</span>
+          </div>
+        </div>
+        <!-- second group ends -->
+        <!-- third group starts -->
+        <div class="div-flex">
+          <div class="con-left">
+            <div id="fxll" class="chart-m"></div>
+            <span class="chart-tip">注：<i></i>为当前债券所在市场位置</span>
+          </div>
+          <div class="con-right">
+            <div id="dqll" class="chart-m"></div>
+            <span class="chart-tip">注：<i></i>为当前债券所在市场位置</span>
+          </div>
+        </div>
+        <!-- third group ends -->
+        <!-- fouth group starts -->
+        <div class="div-flex">
+          <div class="con-left">
+            <div id="zxzxpj" class="chart-m"></div>
+            <span class="chart-tip">注：<i></i>为当前债券所在市场位置</span>
+          </div>
+          <div class="con-right">
+            <div id="zzyhpj" class="chart-m"></div>
+            <span class="chart-tip">注：<i></i>为当前债券所在市场位置</span>
+          </div>
+        </div>
+        <!-- fouth group ends -->
+      </div>
+      <!-- echarts渲染区域 ends -->
       <!-- 参与机构 starts -->
       <div class="div-con">
         <h1 class="title"><b>参与机构</b></h1>
@@ -241,34 +322,61 @@
     // 以及这边要做的的是，如果数据请求下来了，则不再进行请求，即保存下来——这个具体看php那边怎么处理吧
 
     // 图的配置项
+    // 这边的series要变成一个整的结构，，因为对于饼图来说这边的配置是不相同的
     var config = {
       "fxze": {
         "title": "发行总额(亿元)",
-        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+        "tName": "发行总额",
+        "tUnit": "(亿元)",
+        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       },
       "zqye": {
         "title": "债券余额(亿元)",
-        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-        "xAxisData": ['zqye月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+        "tName": "债券余额",
+        "tUnit": "(亿元)",
+        "xAxisData": ['zqye月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       },
       "fxqx": {
-        "title": "发行期限(年)"
+        "title": "发行期限(年)",
+        "tName": "发行期限",
+        "tUnit": "(年)",
+        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       },
       "synx": {
-        "title": "剩余期限(年)"
+        "title": "剩余期限(年)",
+        "tName": "剩余期限",
+        "tUnit": "(年)",
+        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       },
       "fxll": {
-        "title": "发行利率(%)"
+        "title": "发行利率(%)",
+        "tName": "发行利率",
+        "tUnit": "(%)",
+        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       },
       "dqll": {
-        "title": "当期利率(%)"
+        "title": "当期利率(%)",
+        "tName": "当期利率",
+        "tUnit": "(%)",
+        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       },
       "zxzxpj": {
-        "title": "最新债项评级"
+        "title": "最新债项评级",
+        "tName": "最新债项评级",
+        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       },
       "zzyhpj": {
-        "title": "中债隐含评级"
+        "title": "中债隐含评级",
+        "tName": "中债隐含评级",
+        "xAxisData": ['fxze月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+        "seriesData": [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       }
     }
 
@@ -288,7 +396,7 @@
         backgroundColor: '#ffffff',
         tooltip : {
             show: 'true',
-            trigger: 'axis'
+            trigger: 'item'
         },
         legend: {
             show: false
@@ -328,6 +436,19 @@
             name:'蒸发量',
             type:'bar',
             data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+            itemStyle: {
+              normal: {
+                color: function (params){
+                  var color = ['#999', '#3494d0'];
+                  if (params.value == 4.9){
+                    return color[1];
+                  }
+                  else{
+                    return color[0];
+                  }
+                }
+              }
+            },
             label: {
                 normal: {
                     show: true,
@@ -339,11 +460,13 @@
 
     // 麻烦用原生js写，不会的你慢慢尝试，尝试了就会了，，你当然可以的
     var chart = null;
+    var chartArr = [];
     var chartObj = document.getElementById('chart');
     var chartWrapObj = document.getElementById('chartWrap');
+    var chartsDetailObj = document.getElementById('chartsDetail');
     // 隐藏的元素时没有长宽的，所以这边先默认吧
     var chartWidth = 406;
-    var chartHeight = 270;  // 实为chart-wrap的高度
+    var chartHeight = 270;  //  实为chart-wrap的高度
 
     // 事件监听
     var showChartIcon = document.querySelectorAll('.show-chart');
@@ -360,13 +483,13 @@
         var curObjWidth = curObj.offsetWidth;
         var location = curObj.getBoundingClientRect();
         // console.log(location.left + '  ' + location.top);
-        var left = location.left + curObjWidth;
+        var left = location.left + curObjWidth/2;
         var top = location.top - 250 + 30;
 
         var winW = window.innerWidth;
         // var winH = window.innerHeight;
         if (left + chartWidth > winW){
-          left = location.left - chartWidth - curObjWidth/4;
+          left = location.left - chartWidth - 5;
         }
 
         // 这边还需另一套计算规则来确定边界
@@ -384,14 +507,22 @@
       });
     }
 
+    chartWrapObj.addEventListener('mousemove', function(){
+      chartWrapObj.style.display = "block";
+    });
+
+    chartWrapObj.addEventListener('mouseout', function(){
+      chartWrapObj.style.display = "none";
+    });
+
     // 最新债项评级  && 中债隐含评级 为饼图，其余为柱状图
-    function initChart (){
+    function initChart () {
       chart = echarts.init(chartObj);
       chart.setOption(option);
     }
 
     // 更新图中的数据
-    function updateChart (cate){
+    function updateChart (cate) {
       var title = config[cate]['title'];
       var seriesData = config[cate]['seriesData'];
       var xAxisData = config[cate]['xAxisData'];
@@ -408,6 +539,95 @@
     // 先调用一次， 用fakeData，然后mouseleave和mouseenter事件中使用函数更新
     initChart();
 
+    function hasClass(element, cls) {
+      return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+    }
+
+    function addClass(element, cls) {
+      if( !hasClass(element, cls) ){
+          element.className += " " + cls;
+       }
+    }
+
+    function removeClass(element, cls) {
+      if(hasClass(element, cls) ){
+         element.className = element.className.replace( new RegExp( "(\\s|^)" + cls + "(\\s|$)" ), " ");
+      }
+    }
+
+    // "显示图例"的点击事件绑定
+    // 这边最好做一个取消文本选中它的，，不然每次都会被选中不是很好的
+    var showObj = document.getElementById('showLegend');
+    showObj.addEventListener('click', function (e) {
+      var ele = e.target;
+      var flag = hasClass(ele, 'active');
+      var showText = "显示图例";
+      // 如果flag为true的话，那就表明是展开状态的
+      if (flag) {
+        removeClass(ele, 'active');
+        chartsDetailObj.style.display = "none";
+      }
+      else{
+        showText = "隐藏图例";
+        addClass(ele, 'active');
+        chartsDetailObj.style.display = "block";
+      }
+
+      ele.innerHTML = showText;
+    });
+
+    // 渲染隐藏起来的chart——但是会有个问题的，隐藏起来的，，它是不具有宽度的，，所以就需要是它的父容器去隐藏——这个正是这样的
+    // 先做一个吧——不知道会不会有什么问题——但是不要害怕问题的出现，问题是肯定会出现的呀，出现了，你解决不就好了嘛
+    function renderCharts (id) {
+      var chart  = echarts.init(document.getElementById(id));
+      var name = config[id]['tName'] || "";
+      var unit = config[id]['tUnit'] || "";
+      var title = config[id]['title'];
+      option.title.text = title;
+      option.series.tooltip = {
+        formatter: "{b}<br/>" + name + "：{c}" + unit
+      }
+      chart.setOption(option);
+      console.log(chart);
+      return chart;
+    }
+
+    // 调整图容器的宽度, 为什么呢？？  echarts的实例对象不对——应该是这个问题
+    function calChartWidth () {
+      var winW = window.innerWidth;
+      var chartWidth = (winW - 10 - 20 -18)/2;
+      return chartWidth;
+    }
+
+    // 这边额外的需要设定一下.chart-m的宽度
+    function initCharts () {
+      var chartWidth = calChartWidth();
+      var chartMObj = document.querySelectorAll('.chart-m');
+      var len = chartMObj.length;
+      for (var i=0;i<len;i++){
+        chartMObj[i].style.width = chartWidth + 'px';
+      }
+
+      // 收集渲染图的数目
+      for (var item in config){
+        var chart = renderCharts(item);
+
+        // 保存下图的实例
+        chartArr.push(chart);
+      }
+    }
+    initCharts();
+
+    // 窗体resize事件——事件无效。。。
+    window.onresize = function (){
+      console.log('dd');
+      var chartWidth = calChartWidth();
+      console.log(chartWidth);
+      console.log(chartArr);
+      for (var i=0;i<chartArr.length;i++){
+        chartArr[i].resize();
+      }
+    }
   </script>
   </body>
 </html>
