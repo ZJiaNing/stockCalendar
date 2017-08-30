@@ -116,92 +116,104 @@
         margin-left: 8px;
         font-size: 12px;
       }
+      .nav-fixed{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 0 10px;
+        background-color: #ffffff;
+        z-index: 11;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <!-- 债券估值 starts -->
-      <div class="div-con">
-        <h1 class="title"><b>中债估值</b></h1>
-        <table>
-          <thead>
-            <th>估价日期</th>
-            <th>估价全价（元）</th>
-            <th>估价净价（元）</th>
-            <th>应计利息</th>
-            <th>到期收益率（%）</th>
-            <th>久期</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2018-01-01</td>
-              <td>锁</td>
-              <td>锁</td>
-              <td>3.234</td>
-              <td>锁</td>
-              <td>锁</td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="topPart">
+        <!-- 债券估值 starts -->
+        <div class="div-con">
+          <h1 class="title"><b>中债估值</b></h1>
+          <table>
+            <thead>
+              <th>估价日期</th>
+              <th>估价全价（元）</th>
+              <th>估价净价（元）</th>
+              <th>应计利息</th>
+              <th>到期收益率（%）</th>
+              <th>久期</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2018-01-01</td>
+                <td>锁</td>
+                <td>锁</td>
+                <td>3.234</td>
+                <td>锁</td>
+                <td>锁</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- 债券估值 ends -->
+        <!-- 基本信息 starts -->
+        <div class="div-con">
+          <h1 class="title"><b>基本信息</b></h1>
+          <table class="two-column-tb">
+            <tbody>
+              <tr>
+                <td>债券代码</td>
+                <td>122000.SH</td>
+                <td>到期日期</td>
+                <td>2017-09-24</td>
+              </tr>
+              <tr>
+                <td>债券简称</td>
+                <td>afa</td>
+                <td>质押债券代码(沪市)</td>
+                <td>104000</td>
+              </tr>
+              <tr>
+                <td>债券全称</td>
+                <td>afa</td>
+                <td>质押债券简称(沪市)</td>
+                <td>104000</td>
+              </tr>
+              <tr>
+                <td>交易市场</td>
+                <td>afa</td>
+                <td>标准券折算率</td>
+                <td>104000</td>
+              </tr>
+              <tr>
+                <td>上市日期</td>
+                <td>afa</td>
+                <td>是否城投债</td>
+                <td>104000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- 基本信息 ends -->
       </div>
-      <!-- 债券估值 ends -->
-      <!-- 基本信息 starts -->
-      <div class="div-con">
-        <h1 class="title"><b>基本信息</b></h1>
-        <table class="two-column-tb">
-          <tbody>
-            <tr>
-              <td>债券代码</td>
-              <td>122000.SH</td>
-              <td>到期日期</td>
-              <td>2017-09-24</td>
-            </tr>
-            <tr>
-              <td>债券简称</td>
-              <td>afa</td>
-              <td>质押债券代码(沪市)</td>
-              <td>104000</td>
-            </tr>
-            <tr>
-              <td>债券全称</td>
-              <td>afa</td>
-              <td>质押债券简称(沪市)</td>
-              <td>104000</td>
-            </tr>
-            <tr>
-              <td>交易市场</td>
-              <td>afa</td>
-              <td>标准券折算率</td>
-              <td>104000</td>
-            </tr>
-            <tr>
-              <td>上市日期</td>
-              <td>afa</td>
-              <td>是否城投债</td>
-              <td>104000</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- 基本信息 ends -->
+
       <!-- 重要指标 starts -->
-      <div class="div-con div-relative">
+      <div id="importantIndex" class="div-con div-relative">
         <h1 class="title">
           <b>重要指标</b>
           <span id="showLegend" class="show-legend">显示图例</span>
         </h1>
         <table>
           <thead>
-            <th class="show-chart" data-cate="fxze">发行总额(亿元)</th>
-            <th class="show-chart" data-cate="zqye">债券余额(亿元)</th>
-            <th class="show-chart" data-cate="fxqx">发行期限(年)</th>
-            <th class="show-chart" data-cate="synx">剩余期限(年)</th>
+            <th class="show-chart" data-cate="fxze" data-type="bar">发行总额(亿元)</th>
+            <th class="show-chart" data-cate="zqye" data-type="bar">债券余额(亿元)</th>
+            <th class="show-chart" data-cate="fxqx" data-type="bar">发行期限(年)</th>
+            <th class="show-chart" data-cate="synx" data-type="bar">剩余期限(年)</th>
             <th>付息频率(月/次)</th>
             <th>距下一付息日</th>
-            <th class="show-chart" data-cate="fxll">发行利率(%)</th>
-            <th class="show-chart" data-cate="dqll">当期利率(%)</th>
-            <th class="show-chart" data-cate="zxzxpj">最新债项评级</th>
-            <th class="show-chart" data-cate="zzyhpj">中债隐含评级</th>
+            <th class="show-chart" data-cate="fxll" data-type="bar">发行利率(%)</th>
+            <th class="show-chart" data-cate="dqll" data-type="bar">当期利率(%)</th>
+            <th class="show-chart" data-cate="zxzxpj" data-type="pie">最新债项评级</th>
+            <th class="show-chart" data-cate="zzyhpj" data-type="pie">中债隐含评级</th>
           </thead>
           <tbody>
             <tr>
@@ -230,10 +242,6 @@
             </tr>
           </tbody>
         </table>
-        <div id="chartWrap" class="chart-wrap">
-          <div id="chart" class="chart-detail"></div>
-          <span>注：<i></i>为当前债券所在市场位置</span>
-        </div>
       </div>
       <!-- 重要指标 ends -->
       <!-- echarts渲染区域 starts -->
@@ -315,6 +323,12 @@
         </table>
       </div>
       <!-- 参与机构 ends -->
+      <!-- hover 上去显示的chart 容器 starts -->
+      <div id="chartWrap" class="chart-wrap">
+        <div id="chart" class="chart-detail"></div>
+        <span>注：<i></i>为当前债券所在市场位置</span>
+      </div>
+      <!-- hover 上去显示的chart 容器 ends -->
     </div>
 
   <script src="echarts.common.min.js"></script>
@@ -380,15 +394,16 @@
       }
     }
 
-    // echarts配置项
-    var option = {
+    // echarts配置项：柱状图
+    var barOption = {
         color: ['#999'],
         title: {
             text: '发行总额(亿元)-市场数据',
             textStyle: {
               color: '#000',
               fontSize: '14'
-            }
+            },
+            x: 'left'
         },
         grid: {
           top: 70
@@ -406,6 +421,7 @@
         },
         calculable : false,
         xAxis : {
+            // show: true,
             type : 'category',
             data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
             axisLine: {
@@ -417,21 +433,20 @@
               color: '#999'
             }
         },
-        yAxis : [
-            {
-                name: '数量',
-                type : 'value',
-                nameTextStyle: {
-                  color: '#000'
-                },
-                axisLine: {
-                  show: false
-                },
-                axisTick: {
-                  show: false
-                }
+        yAxis : {
+            // show: true,
+            name: '数量',
+            type : 'value',
+            nameTextStyle: {
+              color: '#000'
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
             }
-        ],
+        },
         series : {
             name:'蒸发量',
             type:'bar',
@@ -458,12 +473,62 @@
         }
     }
 
+    // echarts配置项：饼图
+    var pieOption = {
+        color: ['#999999'],
+        title : {
+            text: '某站点用户访问来源',
+            textStyle: {
+              color: '#000',
+              fontSize: '14'
+            },
+            x: 'left'
+        },
+        tooltip : {
+            trigger: 'item'
+        },
+        legend: {
+          show: false
+        },
+        series : {
+            name: '访问来源',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:335, name:'直接访问'},
+                {value:310, name:'邮件营销'},
+                {value:234, name:'联盟广告'},
+                {value:135, name:'视频广告'},
+                {value:1548, name:'搜索引擎'}
+            ],
+            itemStyle: {
+              normal: {
+                color: function (params){
+                  var color = ['#999', '#3494d0'];
+                  if (params.value == 335){
+                    return color[1];
+                  }
+                  else{
+                    return color[0];
+                  }
+                }
+              }
+            }
+        }
+    };
+
     // 麻烦用原生js写，不会的你慢慢尝试，尝试了就会了，，你当然可以的
     var chart = null;
     var chartArr = [];
     var chartObj = document.getElementById('chart');
     var chartWrapObj = document.getElementById('chartWrap');
     var chartsDetailObj = document.getElementById('chartsDetail');
+
+    var showFlag = false;    // 标记是否是展开图例的，为true则为展开，为false则为隐藏
+    var topPartObj = document.getElementById('topPart');
+    var importantIndexObj = document.getElementById('importantIndex');
+
     // 隐藏的元素时没有长宽的，所以这边先默认吧
     var chartWidth = 406;
     var chartHeight = 270;  //  实为chart-wrap的高度
@@ -471,7 +536,6 @@
     // 事件监听
     var showChartIcon = document.querySelectorAll('.show-chart');
 
-    // 然后就需要编写具体的执行代码了
     // enter 的时候需要展示chart，leave的时候需要隐藏chart
     for (var i=0;i<showChartIcon.length;i++){
       // 监听鼠标移入
@@ -479,25 +543,28 @@
         // console.log('mouse enter');
         var curObj = e.target;
         var cate = curObj.getAttribute('data-cate');
-        // console.log(cate);
+        var type = curObj.getAttribute('data-type');
+
         var curObjWidth = curObj.offsetWidth;
-        var location = curObj.getBoundingClientRect();
-        // console.log(location.left + '  ' + location.top);
+        var curObjHeight = curObj.offsetHeight;
+        var location = curObj.getBoundingClientRect();   // 注意这个Web API的使用，它是相对是视口的，滚动条滚动的时候，会受到影响
         var left = location.left + curObjWidth/2;
-        var top = location.top - 250 + 30;
+
+        var scrollTop = document.body.scrollTop;         // 或者可以取值于 window.scrollY
+        var oriTop = location.top;
+        // var top  = (showFlag && isNavFixed()) ? oriTop : (oriTop + document.body.scrollTop);
+        var top = oriTop + scrollTop - curObjHeight/2;
 
         var winW = window.innerWidth;
-        // var winH = window.innerHeight;
         if (left + chartWidth > winW){
           left = location.left - chartWidth - 5;
         }
 
-        // 这边还需另一套计算规则来确定边界
         chartWrapObj.style.left = left + 'px';
         chartWrapObj.style.top = top + 'px';
 
         // 先更新数据再显示出来
-        updateChart(cate);
+        updateChart(cate, type);
         chartWrapObj.style.display = "block";
       });
 
@@ -507,10 +574,12 @@
       });
     }
 
+    // chart-detail的鼠标移动事件
     chartWrapObj.addEventListener('mousemove', function(){
       chartWrapObj.style.display = "block";
     });
 
+    // chart-detail的鼠标移除事件
     chartWrapObj.addEventListener('mouseout', function(){
       chartWrapObj.style.display = "none";
     });
@@ -518,22 +587,37 @@
     // 最新债项评级  && 中债隐含评级 为饼图，其余为柱状图
     function initChart () {
       chart = echarts.init(chartObj);
-      chart.setOption(option);
+      chart.setOption(barOption);
     }
 
     // 更新图中的数据
-    function updateChart (cate) {
-      var title = config[cate]['title'];
-      var seriesData = config[cate]['seriesData'];
-      var xAxisData = config[cate]['xAxisData'];
-      option.title.text = title;
+    // @cate:  图的类别
+    // @type： 标志是饼图还是驻状态，取值为pie或者bar
+    function updateChart (cate, type) {
+      var title = config[cate]['title'] || "";
+      var seriesData = config[cate]['seriesData'] || [];
+      var xAxisData = config[cate]['xAxisData'] || [];
 
-      if (seriesData){
-        option.series.data = seriesData;
-        option.xAxis.data = xAxisData;
+      // 先进行清空，这样话，饼图和柱状图就可以互不影响了
+      chart.clear();
+
+      switch(type){
+        case 'bar':
+          barOption.title.text = title;
+          barOption.series.data = seriesData;
+          barOption.xAxis.data = xAxisData;
+          chart.setOption(barOption);
+          break;
+        case 'pie':
+          pieOption.title.text = title;
+          // barOption.series.data = seriesData;
+          // barOption.xAxis.data = xAxisData;
+          chart.setOption(pieOption);
+          break;
+        default:
+          console.log('some thing wrong happends, please check the type.');
+          break;
       }
-
-      chart.setOption(option);
     }
 
     // 先调用一次， 用fakeData，然后mouseleave和mouseenter事件中使用函数更新
@@ -566,11 +650,13 @@
       if (flag) {
         removeClass(ele, 'active');
         chartsDetailObj.style.display = "none";
+        showFlag = false;
       }
       else{
         showText = "隐藏图例";
         addClass(ele, 'active');
         chartsDetailObj.style.display = "block";
+        showFlag = true;
       }
 
       ele.innerHTML = showText;
@@ -583,12 +669,24 @@
       var name = config[id]['tName'] || "";
       var unit = config[id]['tUnit'] || "";
       var title = config[id]['title'];
-      option.title.text = title;
-      option.series.tooltip = {
-        formatter: "{b}<br/>" + name + "：{c}" + unit
+
+      if (id != "zxzxpj" && id != "zzyhpj"){
+        barOption.title.text = title;
+        barOption.series.tooltip = {
+          formatter: "{b}<br/>" + name + "：{c}" + unit
+        }
+        chart.setOption(barOption);
       }
-      chart.setOption(option);
-      console.log(chart);
+      else{
+        pieOption.title.text = title;
+        pieOption.series.tooltip = {
+          formatter:  name + "：{c}" + unit
+        }
+        chart.setOption(pieOption);
+      }
+
+
+      // console.log(chart);
       return chart;
     }
 
@@ -599,7 +697,7 @@
       return chartWidth;
     }
 
-    // 这边额外的需要设定一下.chart-m的宽度
+    // 这边额外的需要设定一下 .chart-m 的宽度
     function initCharts () {
       var chartWidth = calChartWidth();
       var chartMObj = document.querySelectorAll('.chart-m');
@@ -618,7 +716,20 @@
     }
     initCharts();
 
-    // 窗体resize事件——事件无效。。。
+    // 计算是否需要置顶的条件
+    function isNavFixed () {
+      var flag = false;
+      var scrollTop = document.body.scrollTop;
+      var aboveHeight = topPartObj.offsetHeight + 15;
+      if (scrollTop >= aboveHeight){
+        flag = true;
+      }
+
+      return flag;
+    }
+
+    // 窗体resize事件——事件无效。。。还有一个resize事件有点问题，但是这个我暂时还没有什么好的
+    // 解决方案，只有一种，就是更新option的选项，但是这样的话，感觉代价有点大的。。。
     window.onresize = function (){
       console.log('dd');
       var chartWidth = calChartWidth();
@@ -626,6 +737,25 @@
       console.log(chartArr);
       for (var i=0;i<chartArr.length;i++){
         chartArr[i].resize();
+      }
+    }
+
+    // 监听窗体的滚动事件
+    window.onscroll = function (){
+      // 以及需要计算上方两个区块（基本信息和中债估值）的高估
+      // 如果这个高度大于或者等于scrollTop的值，那么就需要对重要指标进行固定了
+      // 以及这段代码需要在图例展开的的状态下执行, 如果需要的话，下面的这段代码也放到一个函数体中去吧
+      if (showFlag){
+        if (isNavFixed()){
+          addClass(importantIndexObj, 'nav-fixed');
+        }
+        else{
+          removeClass(importantIndexObj, 'nav-fixed');
+        }
+      }
+      else{
+        // 如果发现showFlag变成false的话，也是需要移除这个样式类的
+        removeClass(importantIndexObj, 'nav-fixed');
       }
     }
   </script>
